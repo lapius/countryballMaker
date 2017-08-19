@@ -5,25 +5,22 @@ using UnityEngine.UI;
 
 public class BlockGenerator : MonoBehaviour {
 
+	[Header("Block Generation")]
+
 	private int rows = 1;
 	public Text rowsTxt;
 	private int colls = 1;
 	public Text collsTxt;
-
 	public Transform holder;
 	public GameObject comicBlock;
 
-	// Use this for initialization
+
 	void Start () {
 		rowsTxt.text = "" + rows;
 		collsTxt.text = "" + colls;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		//rowsTxt.text = "" + rows;
-		//collsTxt.text = "" + colls;
-	}
+
+	//======================== Generation =============================================
 
 	public void AddValueRow (){
 		if(rows != 99){
@@ -54,13 +51,51 @@ public class BlockGenerator : MonoBehaviour {
 	}
 
 	public void Generate(){
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < colls; j++) {
+		for (int i = 0; i < rows; i++) { //eilutes
+			Debug.Log("Eilutes: " + rows);
+			for (int j = 0; j < colls; j++) { //stulpeliai
+				Debug.Log("Stulpeliai: " + colls);
 				var newobj = Instantiate(comicBlock, holder.transform.position, holder.transform.rotation);
-				newobj.transform.parent = holder;
-				newobj.transform.position = new Vector3( holder.transform.position.x + (i * 4), holder.transform.position.y - (j * 4) ,0);
-				//newobj.transform.position.y = ;
+				Debug.Log("Spawninanm blocka");
+				newobj.transform.SetParent(holder);
+				newobj.transform.position = new Vector3( holder.transform.position.x + (j * newobj.GetComponent<SpriteRenderer>().bounds.size.x), holder.transform.position.y - (i * newobj.GetComponent<SpriteRenderer>().bounds.size.y) ,0);
 			}
 		}
 	}
+
+	//======================== End of Generation ==========================================
+	[Space]
+	[Header("Making comic")]
+	public Sprite[] outlineSprites;
+	public GameObject buttonPef;
+	public GameObject spritePef;
+	public Transform panelToStore;
+	public GameObject parameterPanel;
+
+	public bool making = false;
+
+	public void GenerateOutlines(){
+		for (int i = 0; i < outlineSprites.Length; i++) {
+			var spriteObj = Instantiate(buttonPef, new Vector3(0,0,0) , Quaternion.identity);
+			spriteObj.transform.SetParent(panelToStore);
+			spriteObj.transform.localScale = new Vector3 (1, 1, 1);
+			spriteObj.GetComponent<Image> ().sprite = outlineSprites [i];
+			//spriteObj.GetComponent<Button> ().onClick.AddListener (() => {
+			//	CreateBall (outlineSprites [i]);
+			//});
+			spriteObj.GetComponent<buttonCode>().SpriteSetUp(outlineSprites [i], holder);
+		}
+
+	}
+
+
+	void Update () {
+		
+	}
+
+	public void CreateBall (Sprite sprites){
+		var spritable = Instantiate(spritePef, holder.transform.position, holder.transform.rotation);
+		spritable.GetComponent<SpriteRenderer> ().sprite = sprites;
+	}
+
 }
