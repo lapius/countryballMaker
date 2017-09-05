@@ -7,9 +7,9 @@ public class BlockGenerator : MonoBehaviour {
 
 	[Header("Block Generation")]
 
-	private int rows = 1;
+	public int rows = 1;
 	public Text rowsTxt;
-	private int colls = 1;
+	public int colls = 1;
 	public Text collsTxt;
 	public Transform holder;
 	public GameObject comicBlock;

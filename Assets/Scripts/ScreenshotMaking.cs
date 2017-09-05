@@ -8,6 +8,8 @@ public class ScreenshotMaking : MonoBehaviour {
 
 	public List<GameObject> go = new List<GameObject>();
 
+	public GameObject rendererBounds;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +17,12 @@ public class ScreenshotMaking : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+
+		/*
+		 tranform.position = rendererBounds.transform.position + new Vector3(0,0,-1);
+		 this.gameObject.GetComponent<Camera>().orthographicSize = rendererBounds.GetComponent<Renderer>().bounds.extents.y;
+		  */
 	}
 
 	public void Capture(){
